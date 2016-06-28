@@ -13,7 +13,7 @@
   <h2>Comments</h2>
   <div class="row">
     <%@post.comments.where(status:true).each.with_index(1) do |comment, index|%>
-
+<div class="col-md-8">
     <div class="col-md-11">
       <p>
         <%=comment.message%>
@@ -47,6 +47,7 @@
     <%end%>
   <%= f.submit "Send Message", class:"btn btn-primary"%>
 <%end%>
+</div>
 </div>
 <style>
   .fb-like{
