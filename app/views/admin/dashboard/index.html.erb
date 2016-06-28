@@ -19,7 +19,7 @@
             <tbody>
             <% @posts.each do |post|%>
               <tr>
-                <td><%=truncate(post.title, lenght:40, separator:'')%></td>
+                <td><%=truncate(post.title, lenght:50, separator:'')%></td>
                 <td><%=post.comments.count%></td>
                 <td><%=time_ago_in_words(post.created_at)%></td>
                 <td>

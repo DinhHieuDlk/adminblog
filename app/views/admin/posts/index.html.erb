@@ -17,8 +17,9 @@
                   </div>
 
                   <div class="col-xs-10 col-sm-6 col-md-8 article-title">
-                    <p><%= truncate(strip_tags(post.content), lenght:100, separate:"") %></p>
+                    <p><%= truncate(strip_tags(post.title), lenght:200, separate:"") %></p>
                     <small><%=time_ago_in_words(post.created_at)%></small>
+                    <small><%= truncate(strip_tags(post.content), lenght:400, separate:"") %></small>
                   </div>
 
                   <div class="col-xs-10 col-sm-5 col-md-3 col-xs-offset-2 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
