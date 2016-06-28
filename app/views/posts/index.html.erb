@@ -5,7 +5,7 @@
     <footer><small><%=time_ago_in_words(post.created_at)%></small></footer>
 
     <div class="lead">
-      <%= truncate(strip_tags(post.content), lenght:500, separator:'', escape: false){link_to "Read More", post_path(post)}%>
+      <%= truncate(strip_tags(post.content), lenght:500, separator:''){link_to "Read More", post_path(post)}%>
     </div>
   <% if Setting.tag_visible?%>
     <footer>
