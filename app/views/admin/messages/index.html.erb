@@ -18,7 +18,7 @@
                   </div>
 
                   <div class="col-xs-10 col-sm-6 col-md-8 article-title">
-                    <p><%= truncate(message.content, lenght:60, separator:'')%></p>
+                    <p><%= truncate(message.content, length:60, separator:'')%></p>
                     <small><%= message.visitor.fullname%> send at <%=time_ago_in_words(message.created_at)%></small>
                   </div>
 

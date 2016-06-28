@@ -2,11 +2,11 @@
 <div class="col-md-8">
 <% @posts.each do |post| %>
   <article>
-    <header><h2><%=truncate(post.title, lenght:150, separator:'') %></h2></header>
+    <header><h2><%=truncate(post.title, length:100, separator:'') %></h2></header>
     <footer><small><%=time_ago_in_words(post.created_at)%></small></footer>
 
     <div class="lead">
-      <%= truncate(strip_tags(post.content), lenght:600, separator:''){link_to "Read More", post_path(post)}%>
+      <%= truncate(strip_tags(post.content), length:250, separator:''){link_to "Read More", post_path(post)}%>
     </div>
   <% if Setting.tag_visible?%>
     <footer>
