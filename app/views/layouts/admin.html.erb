@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Adminblog</title>
+  <%= stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'admin/application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="container-fluid display-table">
+    <div class="row display-table-row">
+      <%=render 'layouts/nav'%>
+      <div class="col-md-10 col-sm-11 display-table-cell valign-top">
+      <%=render 'layouts/nav_head'%>
+        <%flash.each do |name , msg|%>
+          <%=content_tag :div, msg, class:"alert alert-#{name}"%>
+        <%end%>
+        <%= yield %>
+        <div class="row">
+            <footer id="admin-footer" class="clearfix">
+              <div class="pull-left"><b>Copyright </b>&copy; <%=Date.current.year%></div>
+              <div class="pull-right">admin system</div>
+            </footer>
+        </div>
+      </div>
+  </div>
+</div>
+
+</body>
+</html>

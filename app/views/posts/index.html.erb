@@ -1,0 +1,26 @@
+
+<% @posts.each do |post| %>
+  <article>
+    <header><h2><%=truncate(post.title, lenght:60, separator:'') %></h2></header>
+    <footer><small><%=time_ago_in_words(post.created_at)%></small></footer>
+
+    <div class="lead">
+      <%= truncate(strip_tags(post.content.html_safe), lenght:150, separator:'', escape: false){link_to "Read More", post_path(post)}%>
+    </div>
+  <% if Setting.tag_visible?%>
+    <footer>
+      <%post.tags.each do |tag|%>
+      <%=link_to posts_path(tag: tag.name) do%>
+      <span class="label label-default"><%=tag.name%></span>
+      <%end%>
+      <%end%>
+    </footer>
+    <%end%>
+    <hr>
+  </article>
+<% end %>
+<nav>
+  <ul class="pagination">
+  <%= paginate @posts%>
+  </ul>
+</nav>

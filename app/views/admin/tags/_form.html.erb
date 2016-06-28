@@ -1,0 +1,31 @@
+<%= form_for [:admin,@tag] do |f| %>
+  <% if @tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+
+      <ul>
+      <% @tag.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="form-group">
+ 
+    <label>Add comma separated tags below</label>
+    <p>
+    <%= f.text_area :name , placeholder:'e.g coding, css, python, ruby', class:"form-control", rows:"3"%>
+    </p>
+ 
+  <p>
+    <%= f.submit "Save Tags", class:"btn btn-large btn-block btn-primary"%>
+    </p>
+</div>
+<% end %>
+
+
+
+
+
+
+

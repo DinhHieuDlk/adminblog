@@ -1,0 +1,52 @@
+
+
+<div id="content">
+              <header class="clearfix">
+                <h2 class="page_title pull-left">All Message</h2>
+                <%= link_to new_admin_post_path  do%>
+                <button type="button" class="btn btn-xs btn-primary pull-right">Create new article</button>
+                <%end%>
+              </header>
+
+              <div class="content-inner">
+                <%=render 'search', route: admin_messages_path%>
+              <%@messages.each do |message|%>
+              <p style=<%= message_wight(message)%>>
+                <div class="row article-row">
+                  <div class="col-xs-2 col-sm-1 col-md-1 status-padding">
+                    <span class="label label-success label-sm"> <%= status_converter(message.status, truthy: "read", falsey: "not read")%></span>
+                  </div>
+
+                  <div class="col-xs-10 col-sm-6 col-md-8 article-title">
+                    <p><%= truncate(message.content, lenght:60, separator:'')%></p>
+                    <small><%= message.visitor.fullname%> send at <%=time_ago_in_words(message.created_at)%></small>
+                  </div>
+
+                  <div class="col-xs-10 col-sm-5 col-md-3 col-xs-offset-2 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+                    <div class="article-actions">
+                     <%=status_link(message)%>
+                      <%= link_to admin_message_path(message) ,class:"btn btn-xs btn-default",role:"button"  do%>
+                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true">&nbsp;View</span>
+                      <%end%>
+                      <%= link_to admin_message_path(message), method: :delete, data:{confirm:"are you sure?"},class:"btn btn-xs btn-default",role:"button"  do %>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;Delete</span>
+                      <%end%>
+                    </div>
+                  </div>
+                </div>
+              </p>
+                <hr>
+                <% end %>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <nav>
+                      <ul class="pagination">
+                        <%= paginate @messages%>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+
+              </div>
+            </div>

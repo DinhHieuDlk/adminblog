@@ -1,0 +1,65 @@
+
+<article>
+  <h1><%= @post.title %></h1>
+  <div class="lead">
+  <%= @post.content.html_safe %>
+  </div>
+  <br>
+  
+  <div class="fb-like" data-href="<%=request.original_url %>" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+</article>
+<br>
+<div id="comments">
+  <h2>Comments</h2>
+  <div class="row">
+    <%@post.comments.where(status:true).each.with_index(1) do |comment, index|%>
+
+    <div class="col-md-11">
+      <p>
+        <%=comment.message%>
+      </p>
+      <footer>
+        <small><b><%=comment.visitor.fullname%></b> Commented on: <%=time_ago_in_words(comment.created_at)%></small>
+      </footer>
+      <hr>
+    </div>
+    <div class="col-md-1 comment-num"><%=add_zero(index)%></div>
+      <%end%>
+  </div>
+
+    <h3>Have your say</h3>
+    <%= form_for @visitor_comment, url: comments_url do |f|%>
+    <p>
+      <label class="sr-only">Full Name</label>
+      <%= f.text_field :fullname,class:"form-control", placeholder:"Full Name"%>
+    </p>
+    <p>
+      <label class="sr-only">Email Address</label>
+       <%= f.email_field :email,class:"form-control", placeholder:"Email Address"%>
+    </p>
+    <%= fields_for :comment do |comment|%>
+    <%= comment.hidden_field :post_id, :value => @post.id %>
+    <p>
+      <label class="sr-only">Message</label>
+      <%=comment.text_area :message, class:"form-control", placeholder:"Message", id:"message",autocomplete: false%>
+      
+    </p>
+    <%end%>
+  <%= f.submit "Send Message", class:"btn btn-primary"%>
+<%end%>
+</div>
+<style>
+  .fb-like{
+    float: right;
+  }
+</style>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+

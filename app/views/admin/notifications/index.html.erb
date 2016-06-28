@@ -1,0 +1,62 @@
+
+   <%=if Notification.any?
+      link_to"dismiss_all", dismiss_all_notifications_path, method: :delete, class:"btn btn-default btn-danger"
+  end %> 
+<div class="row">
+
+              <div class="col-md-6 dashboard-left-cell">
+                <div class="admin-content-con">
+                  <header class="clearfix">
+                    <h5 class="pull-left">Notification Visitors</h5>
+                  </header>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <tr>
+	              			<th>#</th>
+	              			<th>Notification</th>
+	              			<th>Action</th>
+	              		</tr>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <%@visitor_notification.each.with_index(1) do |notif, index|%>
+                      <tr>
+                      <td><%=index%></td>
+                        <td><%= "#{notif.notifiable.fullname } add as a new visitor #{time_ago_in_words notif.created_at}"%></td>
+                        <td>
+                          <%= link_to 'dismiss', admin_notification_path(notif), method: :delete, data: {confirm: "are you sure?"}, class:"btn btn-xs btn-danger"%>
+                        </td>
+                      </tr>
+                      <%end%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-md-6 dashboard-right-cell">
+                <div class="admin-content-con">
+                  <header>
+                    <h5>Notification Comments</h5>
+                  </header>
+                   <table class="table table-striped">
+                    <thead>
+                      <tr>
+	              			<th>#</th>
+	              			<th>Notification</th>
+	              			<th>Action</th>
+	              		</tr>
+                    </thead>
+                    <tbody>
+                    <%@comment_notification.each.with_index(1) do |notif, index|%>
+                      <tr>
+                      <td><%=index%></td>
+                        <td><%= "#{notif.notifiable.visitor.fullname } add a comment #{time_ago_in_words notif.created_at}"%></td>
+                        <td><%= link_to 'dismiss', admin_notification_path(notif), method: :delete, data: {confirm: "are you sure?"}, class:"btn btn-xs btn-danger"%></td>
+                      </tr>
+                      <%end%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>

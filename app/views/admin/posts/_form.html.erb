@@ -1,0 +1,54 @@
+
+<%= form_for [:admin, @post] do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <form>
+      <div class="form-group">
+        <label class="sr-only">Title</label>
+        <%= f.text_field :title,class:"form-control", id:"title", placeholder:"Title" %>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only">Tags</label>
+        <%= f.collection_select :tag_ids, Tag.all, :id, :name, {prompt:''},data:{placeholder:"Select tags"},class:"form-control chosen-select" , multiple: :true %>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only">Article</label>
+         <%= f.cktext_area :content, placeholder:"Article"%>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :publish %> publish article when I click on save
+        </label>
+      </div>
+
+      <div class="clearfix">
+        <button type="submit" class="btn btn-primary pull-right">Save / Publish</button>
+      </div>
+    </form>
+<% end %>
+
+
+<script type="text/javascript">
+      var config = {
+        '.chosen-select' : {},
+        '.chosen-select-deselect' : {allow_single_deselect: true},
+        '.chosen-select-no-single': {disable_search_threshold: 10},
+        '.chosen-select-no-result': {no_results_text: 'Oops, nothing found!'},
+        '.chosen-select-width' : {width: "95%"}
+      }
+      for (var selector in config) {
+        $(selector).chosen(config[selector]);
+      }
+    </script>

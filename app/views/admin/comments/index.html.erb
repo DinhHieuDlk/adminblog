@@ -1,0 +1,60 @@
+<div id="content">
+  <header class="clearfix">
+    <h2 class="page_title pull-left">All approved</h2>
+    <%=link_to new_admin_post_path do%>
+    <button type="button" class="btn btn-xs btn-primary pull-right">Create new article</button>
+    <%end%>
+  </header>
+
+  <div class="content-inner">
+    <%=render 'search', route: admin_comments_path%>
+  <%@comments.each do |comment|%>
+    <div class="row comments-row">
+      <div class="col-sm-2 col-md-1">
+        <img class="img-circle hidden-xs" src="https://api.fnkr.net/testimg/70x70/00CED1/FFF/?text=70x70">
+      </div>
+
+      <div class="col-sm-10 col-md-11">
+        <div class="row">
+          <div class="col-xs-9 col-sm-10 col-md-9">
+            <b><%=comment.visitor.fullname%></b> posted message on <b><%=truncate(comment.post.title, lenght: 50, separator:'')%></b><br>
+            <small><%=comment.created_at.strftime("%I:%M%p - %a, %d/%m/%Y")%></small>
+          </div>
+
+          <div class="col-xs-3 col-sm-2 col-md-3">
+            <div class="clearfix">
+              <div class="pull-right comment-age"><%=time_ago_in_words(comment.created_at)%></div>
+            </div>
+          </div>
+        </div>
+        <div class="well well-sm comments-well">
+          <%= comment.message%>
+      </div>
+      <div class="clearfix">
+        <div class="pull-right">
+        <%if comment.status == true%>
+            <%=link_to admin_comment_path(comment, status: false), method: :put, class:"btn btn-xs btn-default" do%>
+              <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+              Un-approve
+            <%end%>
+          <%else%>
+             <%=link_to admin_comment_path(comment, status: true), method: :put, class:"btn btn-xs btn-default" do%>
+              <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+              Approve
+            <%end%>
+        <%end%>
+
+          <%=link_to admin_comment_path(comment), method: :delete, data:{comfirm: "are you sure"}, class:"btn btn-xs btn-default" do%>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Delete
+          <%end%>
+        </div>
+      </div>
+      </div>
+    </div>
+  <%end%>
+
+  </div>
+</div>
+
+            <%=paginate @comments%>

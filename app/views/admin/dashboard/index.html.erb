@@ -1,0 +1,109 @@
+
+  <div id="dashboard-con">
+    <div class="row">
+      <div class="col-md-6 dashboard-left-cell">
+        <div class="admin-content-con">
+          <header class="clearfix">
+            <h5 class="pull-left">Articles</h5>
+            <a class="btn btn-xs btn-primary pull-right" href="<%=new_admin_post_path%>" role="button">Create new article</a>
+          </header>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>title</th>
+                <th>replies</th>
+                <th>date</th>
+                <th>actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @posts.each do |post|%>
+              <tr>
+                <td><%=truncate(post.title, lenght:40, separator:'')%></td>
+                <td><%=post.comments.count%></td>
+                <td><%=time_ago_in_words(post.created_at)%></td>
+                <td>
+                  <a class="btn btn-xs btn-warning" href="<%=edit_admin_post_path(post)%>" role="button">edit</a>
+                  <a class="btn btn-xs btn-primary" href="<%=admin_post_path(post)%>" role="button">view</a>
+                  <%=link_to "del", admin_post_path(post), method: :delete, data:{confirm:"are you sure?"}, class:"btn btn-xs btn-danger", role:"button"%>
+                 
+                </td>
+              </tr>
+              <%end%>
+            </tbody>
+          </table>
+          <div class="clearfix">
+            <a href="<%=admin_posts_path%>" class="pull-right text-link">view all articles</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 dashboard-right-cell">
+        <div class="admin-content-con">
+          <header>
+            <h5>Comments</h5>
+          </header>
+          <%@comments.each do|comment|%>
+          <div class="comment-head-dash clearfix">
+            <div class="commenter-name-dash pull-left"><%=comment.visitor.fullname%></div>
+            <div class="days-dash pull-right"><%=time_ago_in_words(comment.created_at)%></div>
+          </div>
+          <p class="comment-dash">
+            <%=truncate(comment.message, lenght: 150, separator:'')%>
+          </p>
+          <small class="comment-date-dash"><%=comment.created_at.strftime("%I:%M%p %a, %d/%m/%Y")%> </small>
+          <hr>
+          <%end%>
+          
+
+          <div class="clearfix">
+            <a href="<%=admin_comments_path%>" class="pull-right text-link">view all comments</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="admin-content-con clearfix">
+          <header>
+            <h5>Commenters</h5>
+          </header>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            <%@visitors.each.with_index(1) do |visitor, index|%>
+              <tr>
+                <td><%=index%></td>
+                <td><%=visitor.fullname%></td>
+                <td><%=visitor.email%></td>
+                <td><%=visitor.created_at.strftime("%I:%M%p - %a, %d/%m/%Y")%></td>
+                <td><%=link_to "Delete", admin_visitor_path(visitor), method: :delete, date:{confirm:"are you sure?"}, class:"label label-danger"%>
+                </td>
+              </tr>
+             <%end%>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <footer id="admin-footer" class="clearfix">
+      <div class="pull-left"><b>Copyright </b>&copy; 2015</div>
+      <div class="pull-right">admin system</div>
+    </footer>
+  </div>
+

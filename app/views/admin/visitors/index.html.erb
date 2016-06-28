@@ -1,0 +1,36 @@
+
+<div id="content">
+	            <header class="clearfix">
+	              <div class="col-xs-5 col-sm-3 col-md-3"><b>All commenters</b></div>
+	              <div class="col-xs-7 col-sm-9 col-md-9">
+	              <%=link_to new_admin_post_path do%>
+	              	<button type="button" class="btn btn-xs btn-primary pull-right">Create new article</button>
+	              	<%end%>
+	              </div>
+	            </header>
+
+	            <div class="content-inner">
+	              <table class="table table-hover">
+	              	<thead>
+	              		<tr>
+	              			<th>#</th>
+	              			<th>Full Name</th>
+	              			<th>Email</th>
+	              			<th class="hidden-xs">Created</th>
+	              			<th>Status</th>
+	              		</tr>
+	              	</thead>
+	              	<tbody>
+	              	<%@visitors.each.with_index(1) do |visitor, index|%>
+	              		<tr>
+	              			<td><%=index%></td>
+	              			<td><%= visitor.fullname%></td>
+	              			<td><%= visitor.email%></td>
+	              			<td class="hidden-xs"><%= time_ago_in_words(visitor.created_at)%></td>
+	              			<td> <%=link_to "Delete", admin_visitor_path(visitor), method: :delete, data:{confirm: "are you sure"}, class:"label label-danger"%></td>
+	              		</tr>
+	              	<%end%>
+	              	</tbody>
+	              </table>
+	            </div>
+	          </div>
