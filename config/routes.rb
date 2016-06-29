@@ -23,7 +23,7 @@ Rails.application.routes.draw do
           resources :settings, only:[:new, :create, :edit, :update]
         end
     end
-    root "pages#index"
+    root "posts#index"
     resources :posts, only:[:index, :show]
     resources :messages, only: [:new, :create]
     resources :comments, only:[:create]
