@@ -3,7 +3,7 @@
 <% @posts.each do |post| %>
   <article>
     <header><h2><%=link_to truncate(post.title, length:100, separator:''), post_path(post) %></h2></header>
-    <footer><small>posts <%=time_ago_in_words(post.created_at)%> ago</small></footer>
+    <footer><small><%=time_ago_in_words(post.created_at)%> ago</small></footer>
 
     <div class="lead">
       <%= truncate(strip_tags(post.content), length:250, separator:''){link_to "Read More", post_path(post)}%>

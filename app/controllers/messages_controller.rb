@@ -12,20 +12,19 @@ class MessagesController < ApplicationController
     @visitor= Visitor.new(visitor_params)
       if @visitor.save
           @message = @visitor.messages.build(message_params)
-          respond_to do |format|
           if @message.save
               notifiable = Message.find(@message)
               notification = Notification.new(notifiable_id: notifiable.id , notifiable_type: notifiable.class.name ).save
-              format.html { redirect_to new_message_path, notice: 'Message was successfully created.' }
-              format.json { render :show, status: :created, location: @message }
+              redirect_to :back , notice:'Message was successfully created.'
             else
-              format.html { render :new }
-              format.json { render json: @message.errors, status: :unprocessable_entity }
+              Visitor.find(@visitor).destroy
+              redirect_to :back, notice:"message not send"
+              
           end
-        end
+      else
+        redirect_to :back, notice:"message not send"
       end
-      
-  end
+      end 
 
 
   private
