@@ -18,3 +18,6 @@
 .row header h2 a:hover {
 	text-decoration: none;
 }
+  #google_translate_element{
+		padding-top: 10px;
+	}
