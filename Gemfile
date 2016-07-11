@@ -53,9 +53,8 @@ group :development do
 end
 
 gem 'devise'
-gem 'faker'
 gem 'kaminari'
 gem 'chosen-rails'
 gem 'paperclip'
 gem 'ckeditor'
-gem 'recaptcha'
+
