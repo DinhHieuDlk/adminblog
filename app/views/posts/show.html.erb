@@ -37,7 +37,7 @@
       <label class="sr-only">Email Address</label>
        <%= f.email_field :email,class:"form-control", placeholder:"Email Address"%>
     </p>
-    <%= fields_for :comment do |comment|%>
+    <%= f.fields_for :comments do |comment|%>
     <%= comment.hidden_field :post_id, :value => @post.id %>
     <p>
       <label class="sr-only">Message</label>

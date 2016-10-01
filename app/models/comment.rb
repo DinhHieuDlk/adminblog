@@ -7,4 +7,8 @@ class Comment < ActiveRecord::Base
     joins(:visitor).where("message Like ? or fullname Like ?", "%#{string}%","%#{string}%")
     #code
   end
+  after_save :notify
+  def notify
+  	notifications.build.save
+  end
 end
