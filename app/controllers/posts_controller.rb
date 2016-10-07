@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     if params[:tag]
       @posts = Post.filter_by_tag(params[:tag]).page(params[:page]).per(Setting.post_per_page)
     elsif params[:search]
-      @posts = Post.search(params[:search]).page(params[:page]).page params[:page]
+      @posts = Post.where(publish:true).search(params[:search])
     else
       @posts = Post.where(publish:true).order("created_at DESC").page(params[:page]).per(Setting.post_per_page)
     end
