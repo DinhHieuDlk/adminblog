@@ -6,8 +6,14 @@ class PostsController < ApplicationController
   def index
     if params[:tag]
       @posts = Post.filter_by_tag(params[:tag]).page(params[:page]).per(Setting.post_per_page)
+    elsif params[:search]
+      @posts = Post.search(params[:search]).page(params[:page]).page params[:page]
     else
       @posts = Post.where(publish:true).order("created_at DESC").page(params[:page]).per(Setting.post_per_page)
+    end
+    respond_to do |format|
+      format.html
+      format.js
     end
 
   end

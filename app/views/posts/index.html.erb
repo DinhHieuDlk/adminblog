@@ -1,27 +1,47 @@
 <%= render "layouts/profile"%>
-<div class="col-md-8">
-<% @posts.each do |post| %>
-  <article>
-    <header><h2><%=link_to truncate(post.title, length:100, separator:''), post_path(post) %></h2></header>
-    <footer><small><%=time_ago_in_words(post.created_at)%> ago</small></footer>
 
-    <div class="lead">
-      <%= truncate(strip_tags(post.content), length:250, separator:''){link_to "Read More", post_path(post)}%>
-    </div>
-  <% if Setting.tag_visible?%>
-    <footer>
-      <%post.tags.each do |tag|%>
-      <%=link_to posts_path(tag: tag.name) do%>
-      <span class="label label-default"><%=tag.name%></span>
-      <%end%>
-      <%end%>
-    </footer>
-    <%end%>
-    <hr>
-  </article>
-<% end %>
+<div class="col-md-8">
+<div class="seach">
+<%=form_tag posts_path, method: :get, id:'search_product', class:'form-group', remote: true do %>
+      <%=text_field_tag :search, params[:search], class:'form-control',  placeholder: "Search Post"%>
+  <%end%>
+      </div>
+      <div class="post">
+        <%= render @posts%>
+      </div>
 <nav>
     <nav>
           <%= paginate @posts%>
     </nav>
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+  var timeout = null;
+  $('#search_product input').keyup(function(e){
+      e.preventDefault();
+      clearTimeout(timeout);
+         timeout = setTimeout(function(){
+                var data = $("#search").val();
+                $.ajax({
+                  url:$("#search_product").attr("action"),
+                  data: {
+                  search:data},
+                  type: 'get',
+                  dataType: 'script',
+                    });
+               }, 500);
+      });
+});
+</script>
+
+
+<!-- code js search 
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#search_product input').keyup(function(){
+    $.get($('#search_product').attr("action"), $('#search_product').serialize(), null, "script");
+    return false;
+  });
+});
+</script>
+ -->
